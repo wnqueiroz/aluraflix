@@ -43,9 +43,9 @@ const makeColors = (theme: ThemesTypes) => {
   };
 
   const text = {
-    "text-contrast-high": palette.natural.slate12,
-    "text-contrast-low": palette.natural.slate11,
-    "text-natural": palette.natural.slate1,
+    "text-contrast-high": palette.natural.gray12,
+    "text-contrast-low": palette.natural.gray11,
+    "text-natural": palette.natural.gray1,
     "text-black": blackA.blackA12,
     "text-white": whiteA.whiteA12,
   };
@@ -66,18 +66,18 @@ const makeColors = (theme: ThemesTypes) => {
   };
 
   const secondary = {
-    "secondary-01": palette.secondary.cyan1,
-    "secondary-02": palette.secondary.cyan2,
-    "secondary-03": palette.secondary.cyan3,
-    "secondary-04": palette.secondary.cyan4,
-    "secondary-05": palette.secondary.cyan5,
-    "secondary-06": palette.secondary.cyan6,
-    "secondary-07": palette.secondary.cyan7,
-    "secondary-08": palette.secondary.cyan8,
-    "secondary-09": palette.secondary.cyan9,
-    "secondary-10": palette.secondary.cyan10,
-    "secondary-11": palette.secondary.cyan11,
-    "secondary-12": palette.secondary.cyan12,
+    "secondary-01": palette.secondary.gray1,
+    "secondary-02": palette.secondary.gray2,
+    "secondary-03": palette.secondary.gray3,
+    "secondary-04": palette.secondary.gray4,
+    "secondary-05": palette.secondary.gray5,
+    "secondary-06": palette.secondary.gray6,
+    "secondary-07": palette.secondary.gray7,
+    "secondary-08": palette.secondary.gray8,
+    "secondary-09": palette.secondary.gray9,
+    "secondary-10": palette.secondary.gray10,
+    "secondary-11": palette.secondary.gray11,
+    "secondary-12": palette.secondary.gray12,
   };
 
   return {

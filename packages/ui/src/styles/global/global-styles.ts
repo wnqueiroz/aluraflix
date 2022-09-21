@@ -105,7 +105,7 @@ export const globalStyles = globalCss({
       backgroundColor: "transparent",
     },
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "$secondary-09",
+      backgroundColor: "$primary-09",
       borderRadius: "$xs",
     },
   },

@@ -1,5 +1,5 @@
-import { createStitches } from '@stitches/react';
-import type * as Stitches from '@stitches/react';
+import { createStitches } from "@stitches/react";
+import type * as Stitches from "@stitches/react";
 
 import {
   borders,
@@ -11,12 +11,12 @@ import {
   colors,
   utils,
   medias,
-  shadows
-} from './tokens';
+  shadows,
+} from "./tokens";
 
 export type CSS = Stitches.CSS<typeof config>;
 
-export type ThemesTypes = 'dark' | 'light';
+export type ThemesTypes = "dark" | "light";
 
 export type ColorTokensTypes = `$${keyof typeof colors.dark}`;
 
@@ -30,7 +30,7 @@ export const {
   globalCss,
   keyframes,
   styled,
-  theme
+  theme,
 } = createStitches({
   theme: {
     borderStyles: {},
@@ -46,10 +46,10 @@ export const {
     transitions: { ...transitions },
     fontWeights: { ...fonts.weights },
     lineHeights: { ...fonts.lineHeights },
-    letterSpacings: { ...fonts.letterSpacings }
+    letterSpacings: { ...fonts.letterSpacings },
   },
   utils: { ...utils },
-  media: { ...medias }
+  media: { ...medias },
 });
 
 export const themes: {
@@ -57,10 +57,10 @@ export const themes: {
 } = {
   dark: createTheme({
     colors: colors.dark,
-    shadows: shadows.dark
+    shadows: shadows.dark,
   }),
   light: createTheme({
     colors: colors.light,
-    shadows: shadows.light
-  })
+    shadows: shadows.light,
+  }),
 };

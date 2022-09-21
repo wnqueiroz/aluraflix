@@ -12,6 +12,7 @@ export const Header = ({}: HeaderProps) => {
           <s.NavbarItem>
             <s.Logo>
               <Image
+                alt="Aluraflix logo"
                 src={"/logo.png"}
                 width={125}
                 height={30}

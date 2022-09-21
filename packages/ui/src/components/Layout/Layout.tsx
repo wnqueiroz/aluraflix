@@ -1,7 +1,7 @@
-import Image from "next/image";
-
 import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
+
+import * as s from "./Layout.styles";
 
 export type LayoutProps = {
   children?: React.ReactNode;
@@ -9,16 +9,10 @@ export type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <>
+    <s.Wrapper>
       <Header />
-      <main>{children}</main>
+      <s.Main>{children}</s.Main>
       <Footer />
-      <Image
-        src={"/blur.png"}
-        width="1080px"
-        height="1080px"
-        layout={"fixed"}
-      />
-    </>
+    </s.Wrapper>
   );
 };
