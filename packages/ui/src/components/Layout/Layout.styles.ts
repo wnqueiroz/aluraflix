@@ -9,4 +9,18 @@ export const Wrapper = styled("div", {
 export const Main = styled("main", {
   flex: 1,
   padding: "0 50px",
+  marginTop: "61px",
+});
+
+export const BlurWrapper = styled("div", {
+  position: "fixed",
+  zIndex: "$behind",
+});
+
+export const Blur = styled("div", {
+  width: "290px",
+  height: "900px",
+  background: "$primary-09",
+  filter: "blur(250px)",
+  transform: "rotate(-46.28deg)",
 });

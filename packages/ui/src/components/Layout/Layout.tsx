@@ -9,10 +9,15 @@ export type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <s.Wrapper>
-      <Header />
-      <s.Main>{children}</s.Main>
-      <Footer />
-    </s.Wrapper>
+    <>
+      <s.BlurWrapper>
+        <s.Blur />
+      </s.BlurWrapper>
+      <s.Wrapper>
+        <Header />
+        <s.Main>{children}</s.Main>
+        <Footer />
+      </s.Wrapper>
+    </>
   );
 };

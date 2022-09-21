@@ -2,6 +2,7 @@ import { styled } from "../../styles/stitches.config";
 
 export const Wrapper = styled("div", {
   display: "flex",
+  position: "fixed",
   width: "100%",
   background: "$secondary-01",
   borderBottom: "1px solid",
