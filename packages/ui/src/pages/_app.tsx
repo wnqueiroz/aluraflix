@@ -1,9 +1,10 @@
-import type { AppProps } from 'next/app';
+import type { AppProps } from "next/app";
 
-import { ThemeProvider } from 'next-themes';
+import { ThemeProvider } from "next-themes";
 
-import { globalStyles } from '../styles/global/global-styles';
-import { themes } from '../styles/stitches.config';
+import { globalStyles } from "../styles/global/global-styles";
+import { themes } from "../styles/stitches.config";
+import { Layout } from "../components/Layout/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
   globalStyles();
@@ -14,10 +15,12 @@ export default function App({ Component, pageProps }: AppProps) {
       defaultTheme="dark"
       value={{
         dark: themes.dark.className,
-        light: themes.light.className
+        light: themes.light.className,
       }}
     >
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ThemeProvider>
   );
 }
