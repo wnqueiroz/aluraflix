@@ -11,6 +11,7 @@ export const Wrapper = styled("div", {
   padding: "0 50px",
   alignItems: "center",
   justifyContent: "space-between",
+  zIndex: "$always-on-top"
 });
 
 export const Navbar = styled("nav", {});

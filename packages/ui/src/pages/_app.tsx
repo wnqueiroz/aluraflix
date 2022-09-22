@@ -2,9 +2,11 @@ import type { AppProps } from "next/app";
 
 import { ThemeProvider } from "next-themes";
 
+import { Layout } from "../components/Layout/Layout";
 import { globalStyles } from "../styles/global/global-styles";
 import { themes } from "../styles/stitches.config";
-import { Layout } from "../components/Layout/Layout";
+
+import "react-multi-carousel/lib/styles.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   globalStyles();

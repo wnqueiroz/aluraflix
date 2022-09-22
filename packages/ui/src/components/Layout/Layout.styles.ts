@@ -10,11 +10,12 @@ export const Main = styled("main", {
   flex: 1,
   padding: "0 50px",
   marginTop: "61px",
+  zIndex: "$base",
 });
 
 export const BlurWrapper = styled("div", {
   position: "fixed",
-  zIndex: "$behind",
+  zIndex: "$root",
 });
 
 export const Blur = styled("div", {
