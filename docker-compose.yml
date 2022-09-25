@@ -25,9 +25,9 @@ services:
       PGADMIN_DEFAULT_EMAIL: postgres@postgres.com
       PGADMIN_DEFAULT_PASSWORD: postgres
 
-  boilerplate:
+  accounts:
     build:
-      context: ./packages/boilerplate
+      context: ./packages/accounts
       args:
         NODE_ENV: development
     ports:
@@ -35,15 +35,15 @@ services:
     command: npm run start:dev
     restart: on-failure
     volumes:
-      - ./packages/boilerplate:/usr/src/app
-      - node_modules_boilerplate:/usr/src/app/node_modules
+      - ./packages/accounts:/usr/src/app
+      - node_modules_accounts:/usr/src/app/node_modules
     depends_on:
       - postgres
     environment:
       <<: *package-envs
       NODE_PORT: 8080
-      TYPEORM_DATABASE: boilerplate
+      TYPEORM_DATABASE: accounts
 
 volumes:
-  node_modules_boilerplate:
+  node_modules_accounts:
   postgres_data:
