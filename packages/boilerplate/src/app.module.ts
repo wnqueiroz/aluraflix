@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { join } from 'path';
         database: configService.get('TYPEORM_DATABASE'),
       }),
     }),
+    AccountsModule,
   ],
   controllers: [],
   providers: [],
