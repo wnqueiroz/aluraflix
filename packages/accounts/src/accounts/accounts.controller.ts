@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
+import { SignInAccountDto } from './dto/signin-account.dto';
 
 @Controller('accounts')
 export class AccountsController {
@@ -11,8 +12,8 @@ export class AccountsController {
     return this.accountsService.create(createAccountDto);
   }
 
-  @Get()
-  findAll() {
-    return this.accountsService.findAll();
+  @Post('signin')
+  signin(@Body() signInAccountDto: SignInAccountDto) {
+    return this.accountsService.signin(signInAccountDto);
   }
 }
