@@ -34,8 +34,13 @@ export class MoviesService {
     return movie;
   }
 
-  update(id: number, updateMovieDto: UpdateMovieDto) {
-    return `This action updates a #${id} movie`;
+  async update(id: number, updateMovieDto: UpdateMovieDto) {
+    const movie = await this.findOne(id);
+
+    return this.moviesRepository.save({
+      ...movie,
+      ...updateMovieDto,
+    });
   }
 
   remove(id: number) {
