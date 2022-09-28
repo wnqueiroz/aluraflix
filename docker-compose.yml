@@ -24,6 +24,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: postgres@postgres.com
       PGADMIN_DEFAULT_PASSWORD: postgres
+    volumes:
+      - pg_admin:/var/lib/pgadmin
 
   accounts:
     build:
@@ -44,6 +46,27 @@ services:
       NODE_PORT: 8080
       TYPEORM_DATABASE: accounts
 
+  movies:
+    build:
+      context: ./packages/movies
+      args:
+        NODE_ENV: development
+    ports:
+      - 8083:8080
+    command: npm run start:dev
+    restart: on-failure
+    volumes:
+      - ./packages/movies:/usr/src/app
+      - node_modules_movies:/usr/src/app/node_modules
+    depends_on:
+      - postgres
+    environment:
+      <<: *package-envs
+      NODE_PORT: 8080
+      TYPEORM_DATABASE: movies
+
 volumes:
   node_modules_accounts:
+  node_modules_movies:
   postgres_data:
+  pg_admin:
