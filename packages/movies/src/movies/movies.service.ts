@@ -43,7 +43,14 @@ export class MoviesService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} movie`;
+  async remove(id: number) {
+    const movie = await this.findOne(id);
+
+    await this.moviesRepository.remove(movie);
+
+    return {
+      ...movie,
+      id,
+    };
   }
 }
