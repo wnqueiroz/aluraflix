@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateMovieDto } from './dto/create-movie.dto';
@@ -22,8 +22,16 @@ export class MoviesService {
     return this.moviesRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} movie`;
+  async findOne(id: number) {
+    const movie = await this.moviesRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!movie) throw new NotFoundException();
+
+    return movie;
   }
 
   update(id: number, updateMovieDto: UpdateMovieDto) {
