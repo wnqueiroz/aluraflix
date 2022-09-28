@@ -19,7 +19,7 @@ export class MoviesService {
   }
 
   findAll() {
-    return `This action returns all movies`;
+    return this.moviesRepository.find();
   }
 
   findOne(id: number) {
