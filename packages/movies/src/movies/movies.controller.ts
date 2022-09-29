@@ -25,6 +25,11 @@ export class MoviesController {
     return this.moviesService.findAll();
   }
 
+  @Get('genres')
+  findGenres() {
+    return this.moviesService.findGenres();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.moviesService.findOne(+id);

@@ -91,4 +91,8 @@ export class MoviesService {
 
     return entities;
   }
+
+  findGenres() {
+    return this.genresRepository.find();
+  }
 }
