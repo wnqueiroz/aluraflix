@@ -65,8 +65,24 @@ services:
       NODE_PORT: 8080
       TYPEORM_DATABASE: movies
 
+  search:
+    build:
+      context: ./packages/search
+      args:
+        NODE_ENV: development
+    ports:
+      - 8084:8080
+    command: npm run start:dev
+    restart: on-failure
+    volumes:
+      - ./packages/search:/usr/src/app
+      - node_modules_search:/usr/src/app/node_modules
+    environment:
+      NODE_PORT: 8080
+
 volumes:
   node_modules_accounts:
   node_modules_movies:
+  node_modules_search:
   postgres_data:
   pg_admin:
