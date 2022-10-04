@@ -45,6 +45,28 @@ export class MoviesService {
     return movie;
   }
 
+  async findSimilar(id: number) {
+    const movie = await this.findOne(id);
+
+    const genreIds = movie.genres.map((genre) => genre.id);
+
+    const movies = await this.moviesRepository
+      .createQueryBuilder('movie')
+      .leftJoinAndSelect('movie.genres', 'genre')
+      .where('movie.id != :id', { id: movie.id })
+      .andWhere('movie.certification = :certification', {
+        certification: movie.certification,
+      })
+      .andWhere('genre.id IN (:...ids)', {
+        ids: genreIds,
+      })
+      .limit(3)
+      .orderBy('RANDOM()')
+      .getMany();
+
+    return movies;
+  }
+
   async update(id: number, updateMovieDto: UpdateMovieDto) {
     const movie = await this.findOne(id);
 

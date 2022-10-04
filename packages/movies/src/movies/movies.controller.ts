@@ -35,6 +35,11 @@ export class MoviesController {
     return this.moviesService.findOne(+id);
   }
 
+  @Get(':id/similar')
+  findSimilar(@Param('id') id: string) {
+    return this.moviesService.findSimilar(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
     return this.moviesService.update(+id, updateMovieDto);
