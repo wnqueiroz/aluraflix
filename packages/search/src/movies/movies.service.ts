@@ -18,4 +18,18 @@ export class MoviesService {
 
     return response;
   }
+
+  async search(query: string) {
+    const result = await this.elasticsearchService.search({
+      index: 'movies',
+      query: {
+        multi_match: {
+          query,
+          fields: ['title', 'description', 'genres'],
+        },
+      },
+    });
+
+    return result.hits.hits.map((document) => document._source);
+  }
 }

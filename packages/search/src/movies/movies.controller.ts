@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Query, Get } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 
@@ -9,5 +9,10 @@ export class MoviesController {
   @Post()
   create(@Body() createMovieDto: CreateMovieDto) {
     return this.moviesService.create(createMovieDto);
+  }
+
+  @Get('/search')
+  search(@Query('q') query: string) {
+    return this.moviesService.search(query);
   }
 }
