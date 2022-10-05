@@ -2,6 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { CreateMovieDto } from './dto/create-movie.dto';
 
+type MovieDocument = {
+  title: string;
+  description: string;
+  genres: string[];
+};
+
 @Injectable()
 export class MoviesService {
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
@@ -20,7 +26,7 @@ export class MoviesService {
   }
 
   async search(query: string) {
-    const result = await this.elasticsearchService.search({
+    const result = await this.elasticsearchService.search<MovieDocument>({
       index: 'movies',
       query: {
         multi_match: {
@@ -28,8 +34,27 @@ export class MoviesService {
           fields: ['title', 'description', 'genres'],
         },
       },
+      highlight: {
+        fields: {
+          description: {
+            type: 'plain',
+            number_of_fragments: 0,
+            pre_tags: ['<b>'],
+            post_tags: ['</b>'],
+          },
+        },
+      },
     });
 
-    return result.hits.hits.map((document) => document._source);
+    return result.hits.hits.map(({ _source, highlight }) => {
+      let description = _source.description;
+
+      if (highlight?.description.length) description = highlight.description[0];
+
+      return {
+        ..._source,
+        description,
+      };
+    });
   }
 }
