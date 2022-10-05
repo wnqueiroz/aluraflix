@@ -11,7 +11,7 @@ export class MoviesService {
       index: 'movies',
       document: {
         title: createMovieDto.title,
-        genres: createMovieDto.genres,
+        genres: createMovieDto.genres.map((genre) => genre.name),
         description: createMovieDto.description,
       },
     });
