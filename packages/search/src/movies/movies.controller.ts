@@ -1,14 +1,18 @@
-import { Controller, Post, Body, Query, Get } from '@nestjs/common';
+import { Controller, Query, Get } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
+import { EventPattern, Payload } from '@nestjs/microservices';
 
 @Controller('movies')
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
-  @Post()
-  create(@Body() createMovieDto: CreateMovieDto) {
-    return this.moviesService.create(createMovieDto);
+  /**
+   * Used only by consumers
+   */
+  @EventPattern('movies.created')
+  create(@Payload() data: CreateMovieDto) {
+    return this.moviesService.create(data);
   }
 
   @Get('/search')
