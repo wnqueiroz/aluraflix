@@ -95,6 +95,11 @@ services:
     environment:
       NODE_PORT: 8080
 
+  redis:
+    image: redis:7.0.5-alpine3.16
+    ports:
+      - 6379:6379
+
 volumes:
   node_modules_accounts:
   node_modules_movies:

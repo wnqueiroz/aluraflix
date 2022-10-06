@@ -1,5 +1,5 @@
-import { HttpService } from '@nestjs/axios';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { firstValueFrom } from 'rxjs';
 import { Repository } from 'typeorm';
@@ -15,7 +15,7 @@ export class MoviesService {
     private moviesRepository: Repository<Movie>,
     @InjectRepository(Genre)
     private genresRepository: Repository<Genre>,
-    private readonly httpService: HttpService,
+    @Inject('REDIS_SERVICE') private client: ClientProxy,
   ) {}
 
   async create(createMovieDto: CreateMovieDto) {
@@ -28,11 +28,7 @@ export class MoviesService {
 
     const movie = await this.moviesRepository.save(entity);
 
-    await firstValueFrom(
-      this.httpService.post('http://search:8080/movies', {
-        ...movie,
-      }),
-    );
+    await firstValueFrom(this.client.emit('movies.created', movie));
 
     return movie;
   }
