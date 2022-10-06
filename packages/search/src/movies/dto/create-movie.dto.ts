@@ -3,6 +3,7 @@ type Genre = {
   name: string;
 };
 export class CreateMovieDto {
+  id: number;
   title: string;
   description: string;
   genres: Genre[];

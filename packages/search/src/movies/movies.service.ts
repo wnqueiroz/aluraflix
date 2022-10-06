@@ -19,6 +19,7 @@ export class MoviesService {
         title: createMovieDto.title,
         genres: createMovieDto.genres.map((genre) => genre.name),
         description: createMovieDto.description,
+        external_id: createMovieDto.id,
       },
     });
 
@@ -46,12 +47,13 @@ export class MoviesService {
       },
     });
 
-    return result.hits.hits.map(({ _source, highlight }) => {
+    return result.hits.hits.map(({ _source, highlight, _id }) => {
       let description = _source.description;
 
       if (highlight?.description.length) description = highlight.description[0];
 
       return {
+        id: _id,
         ..._source,
         description,
       };
