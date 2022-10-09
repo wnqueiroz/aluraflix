@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { join } from 'path';
 import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
@@ -13,7 +12,7 @@ import { AccountsModule } from './accounts/accounts.module';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         synchronize: true,
-        entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+        autoLoadEntities: true,
         port: 5432,
         host: configService.get('TYPEORM_HOST'),
         username: configService.get('TYPEORM_USERNAME'),
