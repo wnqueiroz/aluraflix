@@ -18,6 +18,7 @@ export class MoviesService {
       document: {
         title: createMovieDto.title,
         genres: createMovieDto.genres.map((genre) => genre.name),
+        thumbnail: createMovieDto.thumbnail,
         description: createMovieDto.description,
         external_id: createMovieDto.id,
       },
