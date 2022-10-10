@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { CreateMovieDto } from './dto/create-movie.dto';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
 type MovieDocument = {
   title: string;
@@ -10,11 +11,13 @@ type MovieDocument = {
 
 @Injectable()
 export class MoviesService {
+  private readonly index = 'movies';
+
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
 
   async create(createMovieDto: CreateMovieDto) {
     const response = await this.elasticsearchService.index({
-      index: 'movies',
+      index: this.index,
       document: {
         title: createMovieDto.title,
         genres: createMovieDto.genres.map((genre) => genre.name),
@@ -27,9 +30,35 @@ export class MoviesService {
     return response;
   }
 
+  async update(updateMovieDto: UpdateMovieDto) {
+    const response = await this.elasticsearchService.search({
+      index: this.index,
+      query: {
+        match: {
+          external_id: updateMovieDto.id,
+        },
+      },
+    });
+
+    const [movie] = response.hits.hits;
+
+    if (!movie) throw new NotFoundException('Movie not found');
+
+    return this.elasticsearchService.update({
+      index: this.index,
+      id: movie._id,
+      doc: {
+        title: updateMovieDto.title,
+        genres: updateMovieDto.genres.map((genre) => genre.name),
+        thumbnail: updateMovieDto.thumbnail,
+        description: updateMovieDto.description,
+      },
+    });
+  }
+
   async search(query: string) {
     const result = await this.elasticsearchService.search<MovieDocument>({
-      index: 'movies',
+      index: this.index,
       query: {
         multi_match: {
           query,

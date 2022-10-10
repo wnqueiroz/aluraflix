@@ -75,7 +75,7 @@ export class MoviesService {
   }
 
   async update(id: number, updateMovieDto: UpdateMovieDto) {
-    const movie = await this.findOne(id);
+    let movie = await this.findOne(id);
 
     const { genres = [] } = updateMovieDto;
 
@@ -87,7 +87,11 @@ export class MoviesService {
 
     await this.moviesRepository.save(entity);
 
-    return this.findOne(id);
+    movie = await this.findOne(id);
+
+    await firstValueFrom(this.client.emit('movies.updated', movie));
+
+    return movie;
   }
 
   async remove(id: number) {

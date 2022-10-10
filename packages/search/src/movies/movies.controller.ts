@@ -2,6 +2,7 @@ import { Controller, Query, Get } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { EventPattern, Payload } from '@nestjs/microservices';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -13,6 +14,11 @@ export class MoviesController {
   @EventPattern('movies.created')
   create(@Payload() data: CreateMovieDto) {
     return this.moviesService.create(data);
+  }
+
+  @EventPattern('movies.updated')
+  update(@Payload() data: UpdateMovieDto) {
+    return this.moviesService.update(data);
   }
 
   @Get('/search')
