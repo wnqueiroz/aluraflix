@@ -1,12 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
-import { CreateMovieDto } from './dto/create-movie.dto';
-import { UpdateMovieDto } from './dto/update-movie.dto';
+import { MovieDto } from './dto/movie.dto';
 
 type MovieDocument = {
+  id: string;
   title: string;
   description: string;
   genres: string[];
+  external_id: number;
 };
 
 @Injectable()
@@ -15,27 +16,27 @@ export class MoviesService {
 
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
 
-  async create(createMovieDto: CreateMovieDto) {
+  async create(movieDto: MovieDto) {
     const response = await this.elasticsearchService.index({
       index: this.index,
       document: {
-        title: createMovieDto.title,
-        genres: createMovieDto.genres.map((genre) => genre.name),
-        thumbnail: createMovieDto.thumbnail,
-        description: createMovieDto.description,
-        external_id: createMovieDto.id,
+        title: movieDto.title,
+        genres: movieDto.genres.map((genre) => genre.name),
+        thumbnail: movieDto.thumbnail,
+        description: movieDto.description,
+        external_id: movieDto.id,
       },
     });
 
     return response;
   }
 
-  async update(updateMovieDto: UpdateMovieDto) {
+  async update(movieDto: MovieDto) {
     const response = await this.elasticsearchService.search({
       index: this.index,
       query: {
         match: {
-          external_id: updateMovieDto.id,
+          external_id: movieDto.id,
         },
       },
     });
@@ -48,10 +49,21 @@ export class MoviesService {
       index: this.index,
       id: movie._id,
       doc: {
-        title: updateMovieDto.title,
-        genres: updateMovieDto.genres.map((genre) => genre.name),
-        thumbnail: updateMovieDto.thumbnail,
-        description: updateMovieDto.description,
+        title: movieDto.title,
+        genres: movieDto.genres.map((genre) => genre.name),
+        thumbnail: movieDto.thumbnail,
+        description: movieDto.description,
+      },
+    });
+  }
+
+  async remove(movieDto: MovieDto) {
+    return this.elasticsearchService.deleteByQuery({
+      index: this.index,
+      query: {
+        match: {
+          external_id: movieDto.id,
+        },
       },
     });
   }

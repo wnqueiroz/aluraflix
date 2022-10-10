@@ -95,14 +95,18 @@ export class MoviesService {
   }
 
   async remove(id: number) {
-    const movie = await this.findOne(id);
+    let movie = await this.findOne(id);
 
     await this.moviesRepository.remove(movie);
 
-    return {
+    movie = {
       ...movie,
       id,
     };
+
+    await firstValueFrom(this.client.emit('movies.deleted', movie));
+
+    return movie;
   }
 
   async upsertGenres(genres: string[]): Promise<Genre[]> {

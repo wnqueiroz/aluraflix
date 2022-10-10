@@ -1,8 +1,7 @@
 import { Controller, Query, Get } from '@nestjs/common';
 import { MoviesService } from './movies.service';
-import { CreateMovieDto } from './dto/create-movie.dto';
 import { EventPattern, Payload } from '@nestjs/microservices';
-import { UpdateMovieDto } from './dto/update-movie.dto';
+import { MovieDto } from './dto/movie.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -12,13 +11,18 @@ export class MoviesController {
    * Used only by consumers
    */
   @EventPattern('movies.created')
-  create(@Payload() data: CreateMovieDto) {
+  create(@Payload() data: MovieDto) {
     return this.moviesService.create(data);
   }
 
   @EventPattern('movies.updated')
-  update(@Payload() data: UpdateMovieDto) {
+  update(@Payload() data: MovieDto) {
     return this.moviesService.update(data);
+  }
+
+  @EventPattern('movies.deleted')
+  remove(@Payload() data: MovieDto) {
+    return this.moviesService.remove(data);
   }
 
   @Get('/search')

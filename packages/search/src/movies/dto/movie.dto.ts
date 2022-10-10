@@ -3,7 +3,7 @@ type Genre = {
   name: string;
 };
 
-export class UpdateMovieDto {
+export class MovieDto {
   id: number;
   title: string;
   description: string;
